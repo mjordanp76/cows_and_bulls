@@ -1,8 +1,8 @@
 """
 Cows & Bulls: A game of deductive guessing
 
-Version 1.0 Info
-- secret number is 4 digits long; no option to change that
+Version 2.0 Info
+- this version gives the user the option to change the length of the secret number
 - every digit in the secret number is unique
 - unlimited tries; no options for difficulty
 - no input validation; no exception handling
@@ -15,8 +15,10 @@ with open('rules.txt', 'r') as f:
     intro = f.read()
 print(intro)
 
+print("OPTIONS")
+sec_num_size = int(input("How many digits (4 -7) do you want the secret number to be?"))
 # global variables
-sec_num = random.sample(range(0,9), 4) # 4-digit secret number without repeating digits
+sec_num = random.sample(range(0,9), sec_num_size) # secret number without repeating digits
 guess_count = 1
 
 # for testing purposes
@@ -44,14 +46,14 @@ while True:
     # compare user's guess and secret number
     if user_num == sec_num:
         break
-    for n in range(4):
+    for n in range(sec_num_size):
         if user_num[n] in sec_num:
             if user_num[n] == sec_num[n]:
                 bulls += 1
             else:
                 if user_num[n]:
                     cows += 1
-    if bulls == 4:
+    if bulls == sec_num_size:
         break
     else:
         print(f"Cows: {cows}\nBulls: {bulls}")
