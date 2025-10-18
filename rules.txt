@@ -3,8 +3,9 @@
 ---                    A game of strategic guesses                        ---
 ---                     By: Michael Jordan Pruner                         ---
 -----------------------------------------------------------------------------
+
 Explanation:
-Your goal is to guess the secret 4-digit number.
+Your goal is to guess the secret number.
 After your guess, I'll tell you how many bulls and how many cows you have.
     - A bull = the correct number in the right spot
     - A cow = the correct number in the wrong spot
@@ -20,14 +21,8 @@ If your next guess is 1324, the response will be:
 because the '1' and '4' are the correct numbers in the right spots (the 2 bulls),
 but the '3' and '2' are the correct numbers in the wrong spots (hence, 2 cows).
 
-Once you guess the correct number (which means you'll have 4 bulls), the response will simply be
-'You win!' since saying '4 bulls' is kinda pointless at that point.
+Once you guess the correct number, you win!
 
 You have unlimited guesses.
-
-*** NOTE ***
-For this version of the game, every digit in the secret number will be unique
-(i.e. numbers like 1337 are not a possibility, nor 7777, or 1212), so repeated digits will not
-be allowed in your guess.
 
 Good luck!

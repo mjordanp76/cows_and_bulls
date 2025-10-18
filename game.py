@@ -1,9 +1,9 @@
 """
 Cows & Bulls: A game of deductive guessing
 
-Version 2.0 Info
+Version 3.0 Info
 - this version gives the user the option to change the length of the secret number
-- every digit in the secret number is unique
+- this version allows secret number and user guess to have repeated digits
 - unlimited tries; no options for difficulty
 - no input validation; no exception handling
 """
@@ -16,20 +16,18 @@ with open('rules.txt', 'r') as f:
 print(intro)
 
 print("OPTIONS")
-sec_num_size = int(input("How many digits (4 -7) do you want the secret number to be?"))
+sec_num_size = int(input("How many digits (4-7) do you want the secret number to be?"))
+
 # global variables
-sec_num = random.sample(range(0,9), sec_num_size) # secret number without repeating digits
+sec_num = []            # saved in a list so digits can be compared via indices
 guess_count = 1
 
-# for testing purposes
-print(sec_num)
+# set secret number
+for n in range(sec_num_size):
+    sec_num.append(random.randint(0,9))
 
-# checks to make sure user's guess has no repeated digits
-def Duplicates(num):
-    for n in num:
-        if num.count(n) > 1:
-            return True
-    return False
+# for testing purposes; remove before playing for real
+print(sec_num)
 
 # game loop
 while True:
@@ -37,24 +35,29 @@ while True:
     cows = 0
     bulls = 0
     user_num = []
+    sec_count = {}
+    user_count = {}
+
     guess = input("Guess the secret number: ")
     for digit in guess:
         user_num.append(int(digit))
-    if Duplicates(user_num):
-        print("Your guess cannot contain repeated digits.\nPlease guess again.")
-        continue
+
     # compare user's guess and secret number
     if user_num == sec_num:
         break
-    for n in range(sec_num_size):
-        if user_num[n] in sec_num:
-            if user_num[n] == sec_num[n]:
-                bulls += 1
-            else:
-                if user_num[n]:
-                    cows += 1
-    if bulls == sec_num_size:
-        break
+    for n in range(sec_num_size): # count bulls
+        if user_num[n] == sec_num[n]:
+            bulls += 1
+        else: # keep track of non-bulls
+            sec_count[sec_num[n]] = sec_count.get(sec_num[n], 0) + 1
+            user_count[user_num[n]] = user_count.get(user_num[n], 0) + 1
+    for i in user_count: # count cows
+        if i in sec_count:
+            cows += min(sec_count[i], user_count[i])
+            '''This prevents digits that appear more in user guess than in secret number from
+            causing too many cows to be counted.
+            '''
+
     else:
         print(f"Cows: {cows}\nBulls: {bulls}")
         user_num.clear()
