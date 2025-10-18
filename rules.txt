@@ -23,6 +23,4 @@ but the '3' and '2' are the correct numbers in the wrong spots (hence, 2 cows).
 
 Once you guess the correct number, you win!
 
-You have unlimited guesses.
-
 Good luck!
